@@ -9,27 +9,33 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  Navigator
 } from 'react-native';
 
+import Main from './Main';
+
 export default class IUI extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  renderScene(route, navigator) {
+    if (route.name == 'Main') {
+      return <Main navigator={navigator} {...route.passProps} />
+    }
+  }
+
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
-      </View>
+      <Navigator
+        style={{ flex: 1 }}
+        initialRoute={{ name: "Main" }}
+        renderScene={ this.renderScene } />
     );
   }
 }
+
 
 const styles = StyleSheet.create({
   container: {
