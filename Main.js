@@ -5,7 +5,8 @@ import {
 	ListView,
 	Navigator,
 	Image,
-	StyleSheet
+	StyleSheet,
+	Dimensions,
 } from 'react-native';
 import GridView from "react-native-easy-grid-view";
 
@@ -51,12 +52,15 @@ export default class Main extends Component {
 
 	_renderCell = (cell) => {
 		return <View onLayout={event => {
-			var width = event.nativeEvent.layout.width;
+			//var width = event.nativeEvent.layout.width - 12;
+			var width = (Dimensions.get('window').width - 20) / 2;
+			var height = (Dimensions.get('window').width - 20) * 0.5 + 50;
+			console.log("WIDTH: " + width);
 			if (this.state.celldWidth != width) {
 				this.setState({cellWidth: width})
 			}
-			if (this.state.cellHeight != width) {
-				this.setState({cellHeight: width})
+			if (this.state.cellHeight != height) {
+				this.setState({cellHeight: height})
 			}
 		}}>
 			<View
@@ -64,19 +68,28 @@ export default class Main extends Component {
 					width: this.state.cellWidth,
 					height: this.state.cellHeight,
 					justifyContent: 'center',
+					flex: 1,
+					margin: 6,
+					backgroundColor: 'white',
 				}}>
-					<Image source={cell.image}></Image>
-					<Text style={{backgroundColor:'#0004',textAlign:'center',color:'#fff',fontSize:24}}>{cell.text}</Text>
+					<Image source={cell.image}
+						style={{
+							flex: 1,
+							width: this.state.cellWidth,
+							resizeMode: 'cover'
+						}}
+					></Image>
+					<Text style={styles.text}>{cell.text}</Text>
 			</View>
 		</View>
 	}
 
 	render() {
 		return (
-			<View>
+			<View style={ styles.container }>
 				<GridView
 					style={ styles.list }
-					spacing={8}
+					spacing={0}
 					dataSource={this.state.dataSource}
 					renderCell={this._renderCell.bind(this)}
 				/>
@@ -87,18 +100,20 @@ export default class Main extends Component {
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center'
+		backgroundColor: '#455B66'
 	},
 	list: {
-		padding: 16
+		marginTop: 88,
+		backgroundColor: '#455B66'
 	},
-	item: {
-		width: 150,
-		height: 200,
-		backgroundColor: 'red',
-		alignItems: 'stretch',
-		margin: 3
+	text: {
+		backgroundColor:'white',
+		textAlign:'center',
+		textAlignVertical: 'center',
+		color:'#000',
+		fontSize: 15,
+		marginHorizontal: 0,
+		marginVertical: 15,
 	}
+	
 });
