@@ -7,6 +7,8 @@ import {
 	Image,
 	StyleSheet,
 	Dimensions,
+	ToolbarAndroid,
+	TouchableHighlight,
 } from 'react-native';
 import GridView from "react-native-easy-grid-view";
 
@@ -19,43 +21,72 @@ export default class Main extends Component {
 			dataSource: ds.cloneWithCells([
 				{
           text: "Layouts",
-          backgroundColor:'#0f0',
           image: require('./img/screen_layouts.png')
         },
 				{
-          text: "User Profile",
-          backgroundColor:'#f00',
+          text: "User profile",
           image: require('./img/screen_user_profile.png')
         }
         , {
           text: "Conference agenda",
-          backgroundColor:'#0f0',
           image: require('./img/screen_conference_agenda.png')
         }, {
           text: "Item layouts",
-          backgroundColor:'#00f',
           image: require('./img/screen_listview_layouts.png')
         }, {
           text: "Selection",
-          backgroundColor:'#f0f',
           image: require('./img/screen_listview_selection.png')
         }, {
           text: "Naver",
-          backgroundColor:'#fff',
           image: require('./img/user.png')
         }
 			], 2),
 			cellWidth: 0,
-			cellHeight: 0
+			cellHeight: 0,
+			layoutName: ""
 		};
 	}
 
+	_navigate = (scene, name) => {
+		this.props.navigator.push({
+			name: scene,
+			passProps: {
+				name: name
+			}
+		})
+	}
+
+	_onPressButton = (text) => {
+		switch(text) {
+			case "Layouts":
+				this._navigate('Layouts', 'from home');
+				break;
+			case "User profile":
+				this._navigate('UserProfile', 'from home');
+				break;
+			case "Conference agenda":
+				this._navigate('ConferenceAgenda', 'from home');
+				break;
+			case "Item layouts":
+				this._navigate('ItemLayouts', 'from home');
+				break;
+			case "Selection":
+				this._navigate('Selection', 'from home');
+				break;
+			case "Naver":
+				this._navigate('Naver', 'from home');
+				break;
+		}
+	}
+
 	_renderCell = (cell) => {
+		/*this.setState({
+			layoutName: cell.text
+		});
+*/
 		return <View onLayout={event => {
-			//var width = event.nativeEvent.layout.width - 12;
 			var width = (Dimensions.get('window').width - 20) / 2;
 			var height = (Dimensions.get('window').width - 20) * 0.5 + 50;
-			console.log("WIDTH: " + width);
 			if (this.state.celldWidth != width) {
 				this.setState({cellWidth: width})
 			}
@@ -63,30 +94,37 @@ export default class Main extends Component {
 				this.setState({cellHeight: height})
 			}
 		}}>
-			<View
-				style={{
-					width: this.state.cellWidth,
-					height: this.state.cellHeight,
-					justifyContent: 'center',
-					flex: 1,
-					margin: 6,
-					backgroundColor: 'white',
-				}}>
-					<Image source={cell.image}
-						style={{
-							flex: 1,
-							width: this.state.cellWidth,
-							resizeMode: 'cover'
-						}}
-					></Image>
-					<Text style={styles.text}>{cell.text}</Text>
-			</View>
+			<TouchableHighlight onPress={() => this._onPressButton(cell.text)}>
+				<View
+					style={{
+						width: this.state.cellWidth,
+						height: this.state.cellHeight,
+						justifyContent: 'center',
+						flex: 1,
+						margin: 6,
+						backgroundColor: 'white',
+					}}>
+						<Image source={cell.image}
+							style={{
+								flex: 1,
+								width: this.state.cellWidth,
+								resizeMode: 'cover'
+							}}
+						></Image>
+						<Text style={styles.text}>{cell.text}</Text>
+				</View>
+			</TouchableHighlight>
 		</View>
 	}
 
 	render() {
 		return (
 			<View style={ styles.container }>
+				<ToolbarAndroid
+					style={{ backgroundColor: '#151F2F', height: 80 }}
+					title="React Native"
+					navIcon={require('./img/ic_menu_main.png')}
+				/>
 				<GridView
 					style={ styles.list }
 					spacing={0}
@@ -103,7 +141,7 @@ const styles = StyleSheet.create({
 		backgroundColor: '#455B66'
 	},
 	list: {
-		marginTop: 88,
+		marginTop: 8,
 		backgroundColor: '#455B66'
 	},
 	text: {

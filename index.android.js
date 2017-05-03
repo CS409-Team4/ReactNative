@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 
 import Main from './Main';
+import UserProfile from './UserProfile';
 
 export default class IUI extends Component {
   constructor(props) {
@@ -23,6 +24,9 @@ export default class IUI extends Component {
   renderScene(route, navigator) {
     if (route.name == 'Main') {
       return <Main navigator={navigator} {...route.passProps} />
+    }
+    if (route.name == 'UserProfile') {
+      return <UserProfile navigator={navigator} {...route.passProps} />
     }
   }
 
