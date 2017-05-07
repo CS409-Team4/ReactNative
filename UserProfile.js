@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import CheckBox from 'react-native-check-box';
 
-export default class Main extends Component {
+export default class UserProfile extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -43,7 +43,8 @@ export default class Main extends Component {
 				<ToolbarAndroid
 					style={{ backgroundColor: '#151F2F', height: 50 }}
 					title="React Native"
-					navIcon={require('./img/ic_menu_main.png')}>
+					navIcon={require('./img/ic_back.png')}
+					onIconClicked={ () => this.props.navigator.pop() }>
 				</ToolbarAndroid>
 				<View style={ styles.subcontainer }>
 					<View style={ styles.formContent }>
@@ -158,6 +159,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		fontSize: 12,
 		marginTop: 6,
+		alignSelf: 'center'
 	},
 	fieldSwitch: {
 		flex: 1,

@@ -38,7 +38,7 @@ export default class Main extends Component {
           image: require('./img/screen_listview_selection.png')
         }, {
           text: "Naver",
-          image: require('./img/user.png')
+          image: require('./img/screen_naver.png')
         }
 			], 2),
 			cellWidth: 0,
@@ -121,7 +121,7 @@ export default class Main extends Component {
 		return (
 			<View style={ styles.container }>
 				<ToolbarAndroid
-					style={{ backgroundColor: '#151F2F', height: 80 }}
+					style={{ backgroundColor: '#151F2F', height: 50 }}
 					title="React Native"
 					navIcon={require('./img/ic_menu_main.png')}
 				/>
@@ -138,6 +138,7 @@ export default class Main extends Component {
 
 const styles = StyleSheet.create({
 	container: {
+		flex: 1,
 		backgroundColor: '#455B66'
 	},
 	list: {

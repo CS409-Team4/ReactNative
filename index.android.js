@@ -15,6 +15,8 @@ import {
 
 import Main from './Main';
 import UserProfile from './UserProfile';
+import Layouts from './Layouts';
+import ConferenceAgenda from './ConferenceAgenda';
 
 export default class IUI extends Component {
   constructor(props) {
@@ -27,6 +29,12 @@ export default class IUI extends Component {
     }
     if (route.name == 'UserProfile') {
       return <UserProfile navigator={navigator} {...route.passProps} />
+    }
+    if (route.name == 'Layouts') {
+      return <Layouts navigator={navigator} {...route.passProps} />
+    }
+    if (route.name == 'ConferenceAgenda') {
+      return <ConferenceAgenda navigator={navigator} {...route.passProps} />
     }
   }
 
