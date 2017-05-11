@@ -1,0 +1,145 @@
+Applications Graphics Acceleration Info:
+Uptime: 778555813 Realtime: 1674307286
+
+** Graphics info for pid 11877 [com.example.jangyoungsoo.iui_android] **
+
+Recent DisplayList operations
+                DrawRenderNode
+                  DrawRenderNode
+                    DrawRect
+                  DrawRenderNode
+                    Save
+                    ClipRect
+                    DrawText
+                    RestoreToCount
+                  DrawRenderNode
+                    DrawRenderNode
+                    Save
+                    ConcatMatrix
+                    Save
+                    Translate
+                    Rotate
+                    DrawPath
+                    RestoreToCount
+                  DrawRenderNode
+                    DrawRenderNode
+                      DrawRenderNode
+                      Save
+                      ConcatMatrix
+                      Save
+                      Save
+                      DrawBitmap
+                      RestoreToCount
+            RestoreToCount
+RestoreToCount
+DrawRect
+DrawRect
+DrawRect
+DrawRect
+DrawRect
+DrawRect
+DrawRect
+DrawRect
+DrawBitmap
+DrawBitmap
+DrawBitmap
+DrawBitmap
+DrawBitmap
+DrawBitmap
+multiDraw
+  DrawText
+DrawShadow
+DrawRect
+DrawRect
+DrawText
+DrawPath
+DrawBitmap
+
+Caches:
+Current memory usage / total memory usage (bytes):
+  TextureCache         25161780 / 25165824
+  LayerCache                  0 / 16777216 (numLayers = 0)
+  Garbage layers              0
+  Active layers               0
+  RenderBufferCache           0 /  2097152
+  GradientCache               0 /   524288
+  PathCache                1666 /  4194304
+  TessellationCache           0 /  1048576
+  TextDropShadowCache      6895 /  2097152
+  PatchCache               1408 /   131072
+  AAS                  0 bytes ( 0.00 MB )
+ 
+  FontRenderer 0 A8      524288 /   524288
+  FontRenderer 0 RGBA         0 /        0
+  FontRenderer 0 total   524288 /   524288
+Other:
+  FboCache                    1 /       16
+Total memory usage:
+  25696037 bytes, 24.51 MB
+
+Profile data in ms:
+
+	com.example.jangyoungsoo.iui_android/com.example.jangyoungsoo.iui_android.MainActivity/android.view.ViewRootImpl@2dc90c71 (visibility=0)
+	Draw	Prepare	Process	Execute
+	6.27	109.22	31.65	6.46
+	3.60	1.30	3.67	0.80
+	0.27	0.16	11.53	0.51
+	5.55	0.21	13.38	0.85
+	0.60	0.37	3.94	13.98
+	0.60	0.73	4.24	13.87
+	0.77	0.65	3.81	10.64
+	0.72	0.48	3.71	6.47
+	1.35	0.42	4.58	3.21
+	2.62	0.45	3.53	3.76
+	0.77	0.47	4.61	4.17
+	1.54	0.47	3.59	4.42
+	1.29	0.58	3.60	4.35
+	0.76	1.14	4.25	3.85
+	0.77	1.21	3.91	4.23
+	1.11	0.55	4.23	3.51
+	1.14	0.46	4.10	3.59
+	1.10	0.54	3.67	4.64
+	0.76	0.97	3.75	4.52
+	0.29	1.02	4.33	4.37
+	0.70	0.40	15.70	1.03
+	1.11	0.20	4.34	2.39
+	0.62	0.19	4.17	4.82
+	0.31	0.15	4.20	1.18
+	5.33	0.19	1.98	6.93
+	0.51	0.20	4.63	1.06
+	1.00	0.22	12.58	3.78
+	0.86	0.22	3.04	8.20
+	0.24	0.15	2.38	1.07
+	0.61	0.47	3.24	0.73
+	0.53	0.47	3.41	0.61
+	2.85	0.20	2.04	1.59
+	0.83	0.22	7.08	1.30
+	1.02	0.27	9.51	0.76
+	1.21	0.54	6.73	11.30
+	0.67	2.35	4.39	6.56
+	0.70	0.22	5.86	11.30
+	0.65	0.20	3.35	15.55
+	0.61	0.24	3.72	16.41
+	0.89	0.18	3.54	12.64
+	0.63	0.45	3.35	12.80
+	0.61	0.47	3.37	12.77
+	0.60	0.47	3.43	12.83
+	0.65	0.40	4.04	12.12
+	0.83	0.44	3.24	13.01
+	0.95	0.46	3.37	12.89
+	0.90	0.45	3.48	12.63
+	0.25	0.50	3.46	13.16
+	0.23	0.38	2.84	1.35
+	0.23	0.18	2.88	0.85
+	0.15	0.16	2.50	0.99
+
+View hierarchy:
+
+  com.example.jangyoungsoo.iui_android/com.example.jangyoungsoo.iui_android.MainActivity/android.view.ViewRootImpl@2dc90c71
+  63 views, 60.86 kB of display lists
+
+
+Total ViewRootImpl: 1
+Total Views:        63
+Total DisplayList:  60.86 kB
+

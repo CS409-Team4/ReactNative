@@ -10,6 +10,7 @@ import {
 	Switch,
 	Button,
 	Dimensions,
+	TouchableHighlight,
 } from 'react-native';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import IuiTabBar from './IuiTabBar';
@@ -49,11 +50,11 @@ export default class Layouts extends Component {
 					<View style={{ flex: 1 }}>
 						<Text style={ styles.tabName }>{'Stack'}</Text>
 						<View tabLabel='Stack' style={ styles.tabView }>
-							<View style={StyleSheet.flatten([styles.stackCard, {backgroundColor: '#fe8256', marginTop: 0}])}></View>
-							<View style={StyleSheet.flatten([styles.stackCard, {backgroundColor: '#899bfe'}])}></View>
-							<View style={StyleSheet.flatten([styles.stackCard, {backgroundColor: '#455b66'}])}></View>
-							<View style={StyleSheet.flatten([styles.stackCard, {backgroundColor: '#fed03c'}])}></View>
-							<View style={StyleSheet.flatten([styles.stackCard, {backgroundColor: '#3c5bfe'}])}></View>
+							<TouchableHighlight style={{ flex: 1 }}><View style={StyleSheet.flatten([styles.stackCard, {backgroundColor: '#fe8256', marginTop: 0}])}></View></TouchableHighlight>
+							<TouchableHighlight style={{ flex: 1 }}><View style={StyleSheet.flatten([styles.stackCard, {backgroundColor: '#899bfe'}])}></View></TouchableHighlight>
+							<TouchableHighlight style={{ flex: 1 }}><View style={StyleSheet.flatten([styles.stackCard, {backgroundColor: '#455b66'}])}></View></TouchableHighlight>
+							<TouchableHighlight style={{ flex: 1 }}><View style={StyleSheet.flatten([styles.stackCard, {backgroundColor: '#fed03c'}])}></View></TouchableHighlight>
+							<TouchableHighlight style={{ flex: 1 }}><View style={StyleSheet.flatten([styles.stackCard, {backgroundColor: '#3c5bfe'}])}></View></TouchableHighlight>
 						</View>
 					</View>
 					
@@ -118,21 +119,21 @@ export default class Layouts extends Component {
 					<View style={{ flex: 1 }}>
 						<Text style={ styles.tabName }>{'Absolute'}</Text>
 						<View tabLabel='Absolute' style={ styles.tabView }>
-							<View style={StyleSheet.flatten([styles.red, {
+							<TouchableHighlight style={{ flex: 1 }}><View style={StyleSheet.flatten([styles.red, {
 								position: 'absolute',
 								top: 50, left: 50,
 								width: 100, height: 100}])}>
-							</View>
-							<View style={StyleSheet.flatten([styles.lightBlue, {
+							</View></TouchableHighlight>
+							<TouchableHighlight style={{ flex: 1 }}><View style={StyleSheet.flatten([styles.lightBlue, {
 								position: 'absolute',
 								top: 100, right: 50,
 								width: 100, height: 270}])}>
-							</View>
-							<View style={StyleSheet.flatten([styles.lightGreen, {
+							</View></TouchableHighlight>
+							<TouchableHighlight style={{ flex: 1 }}><View style={StyleSheet.flatten([styles.lightGreen, {
 								position: 'absolute',
 								bottom: 80, left: 50,
 								width: 200, height: 100}])}>
-							</View>
+							</View></TouchableHighlight>
 						</View>
 					</View>
 				</ScrollableTabView>
