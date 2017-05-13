@@ -20,27 +20,26 @@ export default class Main extends Component {
 		this.state = {
 			dataSource: ds.cloneWithCells([
 				{
-          text: "Layouts",
-          image: require('./img/screen_layouts.png')
-        },
-				{
-          text: "User profile",
-          image: require('./img/screen_user_profile.png')
-        }
-        , {
-          text: "Conference agenda",
-          image: require('./img/screen_conference_agenda.png')
-        }, {
-          text: "Item layouts",
-          image: require('./img/screen_listview_layouts.png')
-        }, {
-          text: "Selection",
-          image: require('./img/screen_listview_selection.png')
-        }, {
-          text: "Naver",
-          image: require('./img/screen_naver.png')
-        }
-			], 2),
+		          text: "Layouts",
+		          image: require('./img/screen_layouts.png')
+		        },
+						{
+		          text: "User profile",
+		          image: require('./img/screen_user_profile.png')
+		        }
+		        , {
+		          text: "Conference agenda",
+		          image: require('./img/screen_conference_agenda.png')
+		        }, {
+		          text: "Item layouts",
+		          image: require('./img/screen_listview_layouts.png')
+		        }, {
+		          text: "Selection",
+		          image: require('./img/screen_listview_selection.png')
+		        }, {
+		          text: "Naver",
+		          image: require('./img/screen_naver.png')
+		        }], 2),
 			cellWidth: 0,
 			cellHeight: 0,
 			layoutName: ""

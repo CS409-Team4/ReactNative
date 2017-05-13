@@ -84,9 +84,6 @@ export default class ConferenceAgenda extends Component {
 
 	_onSearchChange = (searchText) => {
 		this.setState({search: searchText});
-		console.log("search text");
-		console.log(searchText);
-		console.log(this.data);
 		let filteredData = this.filterItems(searchText, this.state.rawData);
 		this.setState({
 			dataSource: this.state.ds.cloneWithRows(filteredData)
@@ -123,15 +120,17 @@ export default class ConferenceAgenda extends Component {
 						<SearchBar
 							onSearchChange={(searchText) => this._onSearchChange(searchText)}
 			        height={40}
-			        onFocus={() => console.log('On Focus')}
-			        onBlur={() => console.log('On Blur')}
-			        placeholder={'Search...'}
+			        placeholder={'Search'}
 			        autoCorrect={false}
 			        padding={5}
 			        returnKeyType={'search'}
 			        inputStyle={{
-		        	backgroundColor: 'white',
-		        	margin: 16, }} />
+			        	backgroundColor: 'white',
+			        	margin: 16, 
+			        }}
+			        inputProps={{
+			        	defaultValue: this.state.search
+			        }} />
 
 				    <ListView
 				    	dataSource={this.state.dataSource}
@@ -142,15 +141,17 @@ export default class ConferenceAgenda extends Component {
 						<SearchBar
 							onSearchChange={(searchText) => this._onSearchChange(searchText)}
 			        height={40}
-			        onFocus={() => console.log('On Focus')}
-			        onBlur={() => console.log('On Blur')}
-			        placeholder={'Search...'}
+			        placeholder={'Search'}
 			        autoCorrect={false}
 			        padding={5}
 			        returnKeyType={'search'}
 			        inputStyle={{
-		        	backgroundColor: 'white',
-		        	margin: 16, }} />
+			        	backgroundColor: 'white',
+			        	margin: 16, 
+			        }}
+			        inputProps={{
+			        	defaultValue: this.state.search
+			        }} />
 
 				    <ListView
 				    	dataSource={this.state.dataSource}
@@ -161,15 +162,17 @@ export default class ConferenceAgenda extends Component {
 						<SearchBar
 							onSearchChange={(searchText) => this._onSearchChange(searchText)}
 			        height={40}
-			        onFocus={() => console.log('On Focus')}
-			        onBlur={() => console.log('On Blur')}
-			        placeholder={'Search...'}
+			        placeholder={'Search'}
 			        autoCorrect={false}
 			        padding={5}
 			        returnKeyType={'search'}
 			        inputStyle={{
-		        	backgroundColor: 'white',
-		        	margin: 16, }} />
+			        	backgroundColor: 'white',
+			        	margin: 16, 
+			        }}
+			        inputProps={{
+			        	defaultValue: this.state.search
+			        }} />
 
 				    <ListView
 				    	dataSource={this.state.dataSource}
