@@ -113,10 +113,13 @@ export default class ConferenceAgenda extends Component {
 				<ScrollableTabView
 					style={ styles.subcontainer }
 					renderTabBar={() => <DefaultTabBar />}
+					tabBarActiveTextColor={'white'}
+					tabBarInactiveTextColor={'white'}
+					tabBarTextStyle={{ textAlign: 'center', textAlignVertical: 'center' }}
 					tabBarBackgroundColor={'#4ac1fa'}
 					tabBarUnderlineStyle={{ backgroundColor: '#FAC950' }}
 				>
-					<View style={{ flex: 1 }}>
+					<View tabLabel='MAY 3' style={{ flex: 1 }}>
 						<SearchBar
 							onSearchChange={(searchText) => this._onSearchChange(searchText)}
 			        height={40}
@@ -135,13 +138,42 @@ export default class ConferenceAgenda extends Component {
 				    	renderRow={(rowData) => this._renderRow(rowData)} />
 					</View>
 					
-					<View style={{ flex: 1 }}>
-						<Text tabLabel='MAY 4' style={ styles.tabName }>{'May 4'}</Text>
+					<View tabLabel='MAY 4' style={{ flex: 1 }}>
+						<SearchBar
+							onSearchChange={(searchText) => this._onSearchChange(searchText)}
+			        height={40}
+			        onFocus={() => console.log('On Focus')}
+			        onBlur={() => console.log('On Blur')}
+			        placeholder={'Search...'}
+			        autoCorrect={false}
+			        padding={5}
+			        returnKeyType={'search'}
+			        inputStyle={{
+		        	backgroundColor: 'white',
+		        	margin: 16, }} />
+
+				    <ListView
+				    	dataSource={this.state.dataSource}
+				    	renderRow={(rowData) => this._renderRow(rowData)} />
 					</View>
 
-					<View style={{ flex: 1 }}>
-						<Text tabLabel='MAY 5' style={ styles.tabName }>{'May 5'}</Text>
-						
+					<View tabLabel='MAY 5' style={{ flex: 1 }}>
+						<SearchBar
+							onSearchChange={(searchText) => this._onSearchChange(searchText)}
+			        height={40}
+			        onFocus={() => console.log('On Focus')}
+			        onBlur={() => console.log('On Blur')}
+			        placeholder={'Search...'}
+			        autoCorrect={false}
+			        padding={5}
+			        returnKeyType={'search'}
+			        inputStyle={{
+		        	backgroundColor: 'white',
+		        	margin: 16, }} />
+
+				    <ListView
+				    	dataSource={this.state.dataSource}
+				    	renderRow={(rowData) => this._renderRow(rowData)} />	
 					</View>
 				</ScrollableTabView>
 			</View>
