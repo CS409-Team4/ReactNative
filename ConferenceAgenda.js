@@ -103,7 +103,8 @@ export default class ConferenceAgenda extends Component {
 			<View style={ styles.container }>
 				<ToolbarAndroid
 					style={{ backgroundColor: '#151F2F', height: 50 }}
-					title="React Native"
+					title="Conference Agenda"
+					titleColor='white'
 					navIcon={require('./img/ic_back.png')}
 					onIconClicked={ () => this.props.navigator.pop() }>
 				</ToolbarAndroid>
@@ -112,7 +113,7 @@ export default class ConferenceAgenda extends Component {
 					renderTabBar={() => <DefaultTabBar />}
 					tabBarActiveTextColor={'white'}
 					tabBarInactiveTextColor={'white'}
-					tabBarTextStyle={{ textAlign: 'center', textAlignVertical: 'center' }}
+					tabBarTextStyle={{ textAlign: 'center', textAlignVertical: 'center', marginTop: 7 }}
 					tabBarBackgroundColor={'#4ac1fa'}
 					tabBarUnderlineStyle={{ backgroundColor: '#FAC950' }}
 				>
