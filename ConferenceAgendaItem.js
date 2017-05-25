@@ -15,8 +15,6 @@ export default class ConferenceAgendaItem extends Component {
     }
   }
 
-  componentDidMount
-
   updateFav = () => {
     this.setState({
       fav: !this.state.fav

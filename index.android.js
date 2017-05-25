@@ -18,6 +18,8 @@ import UserProfile from './UserProfile';
 import Layouts from './Layouts';
 import ConferenceAgenda from './ConferenceAgenda';
 import ItemLayouts from './ItemLayouts';
+import Selection from './Selection';
+import SelectionDetail from './SelectionDetail';
 
 export default class IUI extends Component {
   constructor(props) {
@@ -39,6 +41,12 @@ export default class IUI extends Component {
     }
     if (route.name == 'ItemLayouts') {
       return <ItemLayouts navigator={navigator} {...route.passProps} />
+    }
+    if (route.name == 'Selection') {
+      return <Selection navigator={navigator} {...route.passProps} />
+    }
+    if (route.name == 'SelectionDetail') {
+      return <SelectionDetail navigator={navigator} {...route.passProps} />
     }
   }
 

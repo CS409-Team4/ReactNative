@@ -5,13 +5,7 @@ import {
 	StyleSheet,
 	Text,
 	ToolbarAndroid,
-	ScrollView,
-	TextInput,
-	Switch,
-	Button,
-	Dimensions,
 	FlatList,
-	TouchableHighlight,
 } from 'react-native';
 
 class ListItem extends React.PureComponent {
@@ -121,7 +115,7 @@ export default class ItemLayouts extends Component {
 		return (
 			<View style={ styles.container }>
 				<ToolbarAndroid
-					style={{ backgroundColor: '#151F2F', height: 50 }}
+					style={{ backgroundColor: '#151F2F', height: 50, alignItems: "center" }}
 					title="Item Layouts"
 					titleColor="white"
 					navIcon={require('./img/ic_back.png')}

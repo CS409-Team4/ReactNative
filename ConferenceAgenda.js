@@ -1,16 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import {
 	View,
-	Image,
 	StyleSheet,
-	Text,
 	ToolbarAndroid,
-	ScrollView,
-	TextInput,
-	Switch,
-	Button,
-	Dimensions,
-	TouchableHighlight,
 	ListView,
 } from 'react-native';
 import ScrollableTabView, {DefaultTabBar, } from 'react-native-scrollable-tab-view';
