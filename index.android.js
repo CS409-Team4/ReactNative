@@ -4,15 +4,16 @@
  * @flow
  */
 
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import {
   AppRegistry,
   StyleSheet,
   Text,
   View,
-  Navigator
 } from 'react-native';
-
+import {
+  Navigator,
+} from 'react-native-deprecated-custom-components';
 import Main from './Main';
 import UserProfile from './UserProfile';
 import Layouts from './Layouts';
@@ -20,6 +21,7 @@ import ConferenceAgenda from './ConferenceAgenda';
 import ItemLayouts from './ItemLayouts';
 import Selection from './Selection';
 import SelectionDetail from './SelectionDetail';
+import SelectionReorder from './SelectionReorder';
 
 export default class IUI extends Component {
   constructor(props) {
@@ -47,6 +49,9 @@ export default class IUI extends Component {
     }
     if (route.name == 'SelectionDetail') {
       return <SelectionDetail navigator={navigator} {...route.passProps} />
+    }
+    if (route.name == 'SelectionReorder') {
+      return <SelectionReorder navigator={navigator} {...route.passProps} />
     }
   }
 

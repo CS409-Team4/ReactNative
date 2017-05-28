@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import {
     View,
     Image,
@@ -32,6 +32,27 @@ class ListItem extends React.PureComponent {
                     </View>
                 </View>
             </TouchableNativeFeedback>
+        )
+    }
+}
+
+class ReorderListItem extends React.PureComponent {
+    render() {
+        return (
+            <View style={ styles.item }>
+                <View style={ styles.reorderHandleContainer }>
+                    <Image source={ require('./img/ic_reorder.png') }
+                           style={{ margin: 5, }}/>
+                </View>
+                <View style={ styles.imageContainer }>
+                    <Image source={ require('./img/ic_fav.png') }
+                           style={{ margin: 5, opacity: this.props.item.fav ? 1 : 0 }}/>
+                </View>
+                <View style={ styles.textContainer }>
+                    <Text style={ styles.title }>{this.props.item.title}</Text>
+                    <Text style={ styles.content }>By {this.props.item.content}</Text>
+                </View>
+            </View>
         )
     }
 }
@@ -70,6 +91,7 @@ export default class Selection extends Component {
                     fav: true,
                 }
             ],
+            isReorderActive: false,
             toolbarActions: [
                 {title: 'Reorder', icon: require('./img/ic_reorder_action_bar.png'), show: 'always'},
                 {title: 'Menu', icon: require('./img/ic_menu_btn.png'), show: 'always'},
@@ -102,7 +124,14 @@ export default class Selection extends Component {
 
     _onActionSelected = (position) => {
         if (position == 0) {    // Reorder
-            // this.props.navigate('SelectionReorder', this.props);
+            let taCopy = this.state.toolbarActions;
+            taCopy[0].icon = require('./img/null.png');
+            this.setState({
+                isReorderActive: true,
+                toolbarActions: taCopy,
+            })
+
+
         } else if (position == 1) {
 
         }
@@ -121,8 +150,10 @@ export default class Selection extends Component {
         return (
             <View style={ styles.container }>
                 <ToolbarAndroid
-                    style={{ backgroundColor: '#151F2F', height: 50 }}
-                    title="Selection"
+                    style={{
+                        backgroundColor: this.state.isReorderActive ? '#30BCFF': '#151F2F',
+                        height: 50 }}
+                    title={this.state.isReorderActive ? "Reorder" : "Selection"}
                     titleColor='white'
                     navIcon={require('./img/ic_back.png')}
                     actions={this.state.toolbarActions}
@@ -131,24 +162,28 @@ export default class Selection extends Component {
                 </ToolbarAndroid>
                 <ScrollableTabView
                     style={ styles.subcontainer }
-                    renderTabBar={() => <DefaultTabBar />}
+                    renderTabBar={() => <DefaultTabBar tabStyle={{ backgroundColor: '#4ac1fa',
+                        opacity: this.state.isReorderActive ? 0.4 : 1}} />}
                     tabBarActiveTextColor={'white'}
                     tabBarInactiveTextColor={'white'}
-                    tabBarTextStyle={{ textAlign: 'center', textAlignVertical: 'center', marginTop: 7 }}
-                    tabBarBackgroundColor={'#4ac1fa'}
-                    tabBarUnderlineStyle={{ backgroundColor: '#151F2F' }}
+                    tabBarTextStyle={{ textAlign: 'center', textAlignVertical: 'center', marginTop: 7}}
+                    tabBarBackgroundColor={'white'}
+                    tabBarUnderlineStyle={{ backgroundColor: '#151F2F',
+                        opacity: this.state.isReorderActive ? 0.4 : 1}}
                 >
                     <View tabLabel='All' style={{ flex: 1 }}>
+
                         <FlatList
-                            style={{ flex: 1 }}
+                            style={{flex: 1}}
                             horizontal={false}
                             data={this.state.data}
                             renderItem={({item, index}) =>
                                 <ListItem item={item}
                                           toggleFav={() => this.toggleFav(index)}
                                           deleteItem={() => this.deleteItem(index)}
-                                          navigate={this._navigate} />}
+                                          navigate={this._navigate}/>}
                         />
+
                     </View>
                     <View tabLabel='Favorites' style={{ flex: 1 }}>
                         <FlatList
@@ -201,5 +236,8 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginRight: 10,
         marginBottom: 4,
+    },
+    reorderHandleContainer: {
+        alignSelf: 'center',
     },
 });
