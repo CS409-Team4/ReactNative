@@ -102,6 +102,8 @@ export default class ItemLayouts extends Component {
 		this.setState({
 			isGrid: !this.state.isGrid,
 			toolbarActions: actions,
+			fixedHeight: true,
+
 		});
 	}
 
@@ -126,9 +128,12 @@ export default class ItemLayouts extends Component {
 				<FlatList
 					style={{ flex: 1 }}
 					horizontal={false}
+					key={this.state.isGrid?
+						2 + (this.state.fixedHeight ? 'f' : 'v')
+						: 1 + (this.state.fixedHeight ? 'f' : 'v')}
 					numColumns={ this.state.isGrid? 2 : 1}
 					data={this.state.data}
-					renderItem={({item}) => <ListItem height={ this.state.isGrid? 106 : 156 }
+					renderItem={({item, index}) => <ListItem height={ this.state.isGrid? 106 : 156 }
 						image={item.image} title={item.title} author={item.author} />}
 				/>
 			</View>

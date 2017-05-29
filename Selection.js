@@ -8,9 +8,11 @@ import {
     FlatList,
     TouchableNativeFeedback,
     TouchableHighlight,
+    TouchableWithoutFeedback,
 } from 'react-native';
 import ScrollableTabView, {DefaultTabBar, } from 'react-native-scrollable-tab-view';
-var SortableListView = require('react-native-sortable-listview');
+// var SortableListView = require('react-native-sortable-listview');
+var ReorderListView = require('./ReorderListView');
 class ListItem extends React.PureComponent {
     render() {
         return (
@@ -41,15 +43,14 @@ class ReorderListItem extends React.PureComponent {
     render() {
         return (
             <View style={ styles.item }>
-                <TouchableHighlight
+                <TouchableWithoutFeedback
                     underlayColor={'#eee'}
-                    delayLongPress={500}
                     style={ styles.reorderHandleContainer }
                     {...this.props.sortHandlers}
                 >
                     <Image source={ require('./img/ic_reorder.png') }
                            style={{ margin: 5, }}/>
-                </TouchableHighlight>
+                </TouchableWithoutFeedback>
                 <View style={ styles.imageContainer }>
                     <Image source={ require('./img/ic_fav.png') }
                            style={{ margin: 5, opacity: this.props.item.fav ? 1 : 0 }}/>
@@ -151,8 +152,6 @@ export default class Selection extends Component {
                 isReorderActive: true,
                 toolbarActions: taCopy,
             })
-
-
         } else if (position == 1) {
 
         }
@@ -212,7 +211,7 @@ export default class Selection extends Component {
                 >
                     <View tabLabel='All' style={{ flex: 1 }}>
                         {this.state.isReorderActive ?
-                            <SortableListView
+                            <ReorderListView
                                 style={{ flex: 1 }}
                                 data={this.state.data}
                                 order={order}
@@ -237,7 +236,7 @@ export default class Selection extends Component {
                     </View>
                     <View tabLabel='Favorites' style={{ flex: 1 }}>
                         {this.state.isReorderActive ?
-                            <SortableListView
+                            <ReorderListView
                                 style={{flex: 1}}
                                 data={this.state.data}
                                 order={order}
