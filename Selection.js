@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component, } from 'react';
 import {
     View,
     Image,
@@ -7,9 +7,10 @@ import {
     ToolbarAndroid,
     FlatList,
     TouchableNativeFeedback,
+    TouchableHighlight,
 } from 'react-native';
 import ScrollableTabView, {DefaultTabBar, } from 'react-native-scrollable-tab-view';
-
+var SortableListView = require('react-native-sortable-listview');
 class ListItem extends React.PureComponent {
     render() {
         return (
@@ -40,10 +41,15 @@ class ReorderListItem extends React.PureComponent {
     render() {
         return (
             <View style={ styles.item }>
-                <View style={ styles.reorderHandleContainer }>
+                <TouchableHighlight
+                    underlayColor={'#eee'}
+                    delayLongPress={500}
+                    style={ styles.reorderHandleContainer }
+                    {...this.props.sortHandlers}
+                >
                     <Image source={ require('./img/ic_reorder.png') }
                            style={{ margin: 5, }}/>
-                </View>
+                </TouchableHighlight>
                 <View style={ styles.imageContainer }>
                     <Image source={ require('./img/ic_fav.png') }
                            style={{ margin: 5, opacity: this.props.item.fav ? 1 : 0 }}/>
@@ -54,6 +60,21 @@ class ReorderListItem extends React.PureComponent {
                 </View>
             </View>
         )
+    }
+}
+
+class RowComponent extends React.PureComponent {
+    render() {
+        return (
+            <TouchableHighlight
+                underlayColor={'#eee'}
+                delayLongPress={500}
+                style={{padding: 25, backgroundColor: "#F8F8F8", borderBottomWidth:1, borderColor: '#eee'}}
+                {...this.props.sortHandlers}
+            >
+                <Text>{this.props.data.text}</Text>
+            </TouchableHighlight>
+        );
     }
 }
 
@@ -138,15 +159,31 @@ export default class Selection extends Component {
     }
 
     _renderFavItem = (item, index) => {
-        if (item.fav) {
-            return <ListItem item={item}
-                             toggleFav={() => this.toggleFav(index)}
-                             deleteItem={() => this.deleteItem(index)}
-                             navigate={this._navigate} />
-        } else return <View></View>;
+        if (this.state.isReorderActive && item.fav) {
+            return <ReorderListItem item={item}/>
+        } else {
+            if (item.fav) {
+                return <ListItem item={item}
+                                 toggleFav={() => this.toggleFav(index)}
+                                 deleteItem={() => this.deleteItem(index)}
+                                 navigate={this._navigate}/>
+            } else return <View></View>;
+        }
+
+    }
+
+    deactivateReorder = () => {
+        let taCopy = this.state.toolbarActions;
+        taCopy[0].icon = require('./img/ic_reorder_action_bar.png');
+        this.setState({
+            isReorderActive: false,
+            toolbarActions: taCopy,
+        })
     }
 
     render() {
+        let order = Object.keys(this.state.data);
+
         return (
             <View style={ styles.container }>
                 <ToolbarAndroid
@@ -158,7 +195,9 @@ export default class Selection extends Component {
                     navIcon={require('./img/ic_back.png')}
                     actions={this.state.toolbarActions}
                     onActionSelected={this._onActionSelected}
-                    onIconClicked={ () => this.props.navigator.pop() }>
+                    onIconClicked={ () => this.state.isReorderActive ?
+                        this.deactivateReorder()
+                        : this.props.navigator.pop() }>
                 </ToolbarAndroid>
                 <ScrollableTabView
                     style={ styles.subcontainer }
@@ -172,28 +211,52 @@ export default class Selection extends Component {
                         opacity: this.state.isReorderActive ? 0.4 : 1}}
                 >
                     <View tabLabel='All' style={{ flex: 1 }}>
-
-                        <FlatList
-                            style={{flex: 1}}
-                            horizontal={false}
-                            data={this.state.data}
-                            renderItem={({item, index}) =>
-                                <ListItem item={item}
-                                          toggleFav={() => this.toggleFav(index)}
-                                          deleteItem={() => this.deleteItem(index)}
-                                          navigate={this._navigate}/>}
-                        />
-
+                        {this.state.isReorderActive ?
+                            <SortableListView
+                                style={{ flex: 1 }}
+                                data={this.state.data}
+                                order={order}
+                                onRowMoved={ e => {
+                                    order.splice(e.to, 0, order.splice(e.from, 1)[0]);
+                                    this.state.data.splice(e.to, 0, this.state.data.splice(e.from, 1)[0]);
+                                    this.forceUpdate();
+                                }}
+                                renderRow={row => <ReorderListItem item={row} />}
+                            /> :
+                            <FlatList
+                                style={{flex: 1}}
+                                horizontal={false}
+                                data={this.state.data}
+                                renderItem={({item, index}) =>
+                                    <ListItem item={item}
+                                              toggleFav={() => this.toggleFav(index)}
+                                              deleteItem={() => this.deleteItem(index)}
+                                              navigate={this._navigate}/>}
+                            />
+                        }
                     </View>
                     <View tabLabel='Favorites' style={{ flex: 1 }}>
-                        <FlatList
-                            style={{ flex: 1 }}
-                            horizontal={false}
-                            data={this.state.data}
-                            renderItem={({item, index}) =>
-                                this._renderFavItem(item, index)
-                            }
-                        />
+                        {this.state.isReorderActive ?
+                            <SortableListView
+                                style={{flex: 1}}
+                                data={this.state.data}
+                                order={order}
+                                onRowMoved={ e => {
+                                    order.splice(e.to, 0, order.splice(e.from, 1)[0]);
+                                    this.state.data.splice(e.to, 0, this.state.data.splice(e.from, 1)[0]);
+                                    this.forceUpdate();
+                                }}
+                                renderRow={(row, sectionID, rowID) => this._renderFavItem(row, rowID)}
+                            /> :
+                            <FlatList
+                                style={{flex: 1}}
+                                horizontal={false}
+                                data={this.state.data}
+                                renderItem={({item, index}) =>
+                                    this._renderFavItem(item, index)
+                                }
+                            />
+                        }
                     </View>
                 </ScrollableTabView>
             </View>
