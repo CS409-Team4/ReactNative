@@ -23,7 +23,9 @@ class ListItem extends React.PureComponent {
                         deleteItem: () => this.props.deleteItem(),
                         title: this.props.item.title,
                         content: this.props.item.content,
-                    }) }>
+                    })}
+                onLongPress={ () => this.props.activateSelection() }
+            >
                 <View style={ styles.item }>
                     <View style={ styles.imageContainer }>
                         <Image source={ require('./img/ic_fav.png') }
@@ -60,6 +62,32 @@ class ReorderListItem extends React.PureComponent {
                     <Text style={ styles.content }>By {this.props.item.content}</Text>
                 </View>
             </View>
+        )
+    }
+}
+
+class SelectionListItem extends React.PureComponent {
+    render() {
+        return (
+            <TouchableNativeFeedback
+                onPress={ () => this.props.toggleSelection()}
+            >
+                <View style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    padding: 8,
+                    backgroundColor: this.props.isSelected ? '#F3F5FC' : 'white',
+                }}>
+                    <View style={ styles.imageContainer }>
+                        <Image source={ require('./img/ic_fav.png') }
+                               style={{ margin: 5, opacity: this.props.item.fav ? 1 : 0 }}/>
+                    </View>
+                    <View style={ styles.textContainer }>
+                        <Text style={ styles.title }>{this.props.item.title}</Text>
+                        <Text style={ styles.content }>By {this.props.item.content}</Text>
+                    </View>
+                </View>
+            </TouchableNativeFeedback>
         )
     }
 }
@@ -114,10 +142,11 @@ export default class Selection extends Component {
                 }
             ],
             isReorderActive: false,
+            isSelectionActive: false,
             toolbarActions: [
                 {title: 'Reorder', icon: require('./img/ic_reorder_action_bar.png'), show: 'always'},
-                {title: 'Menu', icon: require('./img/ic_menu_btn.png'), show: 'always'},
             ],
+            selectedItems: [],
         }
     }
 
@@ -136,6 +165,20 @@ export default class Selection extends Component {
         });
     }
 
+    toggleMultiFavs = () => {
+        let dataCopy = this.state.data;
+        this.state.selectedItems.map((item) => {
+            let idx = dataCopy.indexOf(item);
+            item.fav = !item.fav;
+            dataCopy[idx] = item;
+        }, () => {
+            this.setState({
+                data: dataCopy,
+            });
+        })
+        this.deactivate();
+    }
+
     deleteItem = (index) => {
         let dataCopy = this.state.data;
         dataCopy.splice(index, 1);
@@ -144,16 +187,36 @@ export default class Selection extends Component {
         });
     }
 
-    _onActionSelected = (position) => {
-        if (position == 0) {    // Reorder
-            let taCopy = this.state.toolbarActions;
-            taCopy[0].icon = require('./img/null.png');
-            this.setState({
-                isReorderActive: true,
-                toolbarActions: taCopy,
-            })
-        } else if (position == 1) {
+    deleteMultiItems = () => {
+        let dataCopy = this.state.data;
+        this.state.selectedItems.map((item) => {
+            let idx = dataCopy.indexOf(item);
+            console.log("delete index: " + idx);
+            if (idx > -1) dataCopy.splice(idx, 1);
+        })
+        this.setState({
+            data: dataCopy,
+        });
+        this.deactivate();
+    }
 
+    _onActionSelected = (position) => {
+        if (this.state.isSelectionActive) {
+            if (position == 0) {
+                this.toggleMultiFavs();
+            } else if (position == 1) {
+                this.deleteMultiItems();
+            }
+
+        } else {
+            if (position == 0) {    // Reorder
+                let taCopy = this.state.toolbarActions;
+                taCopy.pop();
+                this.setState({
+                    isReorderActive: true,
+                    toolbarActions: taCopy,
+                })
+            }
         }
     }
 
@@ -162,22 +225,76 @@ export default class Selection extends Component {
             return <ReorderListItem item={item}/>
         } else {
             if (item.fav) {
-                return <ListItem item={item}
-                                 toggleFav={() => this.toggleFav(index)}
-                                 deleteItem={() => this.deleteItem(index)}
-                                 navigate={this._navigate}/>
+                return (
+                    this.state.isSelectionActive ?
+                        <SelectionListItem item={item}
+                                           toggleFav={() => this.toggleFav(index)}
+                                           deleteItem={() => this.deleteItem(index)}
+                                           toggleSelection={() => this.toggleSelection(item, index)}
+                                           isSelected={this.state.selectedItems.includes(item)}
+                                           navigate={this._navigate}/>
+                        :
+                        <ListItem item={item}
+                                         toggleFav={() => this.toggleFav(index)}
+                                         deleteItem={() => this.deleteItem(index)}
+                                         activateSelection={() => this.activateSelection(item)}
+                                         navigate={this._navigate}/>);
             } else return <View></View>;
         }
 
     }
 
-    deactivateReorder = () => {
+    deactivate = () => {
+        if (this.state.isReorderActive) {
+            let taCopy = this.state.toolbarActions;
+            taCopy.push({title: 'Reorder', icon: require('./img/ic_reorder_action_bar.png'), show: 'always'});
+            this.setState({
+                isReorderActive: false,
+                toolbarActions: taCopy,
+            })
+        } else if (this.state.isSelectionActive) {
+            let taCopy = this.state.toolbarActions;
+            taCopy.pop();
+            taCopy.pop();
+            taCopy.push({title: 'Reorder', icon: require('./img/ic_reorder_action_bar.png'), show: 'always'});
+            this.setState({
+                isSelectionActive: false,
+                toolbarActions: taCopy,
+                selectedItems: [],
+            })
+        }
+    }
+
+    activateSelection = (item) => {
+        let selectedData = this.state.selectedItems;
+        selectedData.push(item);
+        console.log(selectedData);
         let taCopy = this.state.toolbarActions;
-        taCopy[0].icon = require('./img/ic_reorder_action_bar.png');
+        taCopy.pop();
+        taCopy.push(
+            {title: 'Favorite', icon: require('./img/add_to_fav_icon.png'), show: 'always'},
+            {title: 'Delete', icon: require('./img/delete_icon.png'), show: 'always'});
         this.setState({
-            isReorderActive: false,
-            toolbarActions: taCopy,
+            selectedItems: selectedData,
+            isSelectionActive: true,
         })
+    }
+
+    toggleSelection = (item, index) => {
+        let selectedData = this.state.selectedItems;
+        console.log(selectedData);
+        let sIndex = selectedData.indexOf(item);
+        if (sIndex > -1) {
+            selectedData.splice(sIndex, 1);
+        } else {
+            selectedData.push(item);
+        }
+        this.setState({
+            selectedItems: selectedData,
+        });
+        console.log("Item: " + item);
+        console.log("Item index: " + index);
+        console.log("Selected item index: " + sIndex);
     }
 
     render() {
@@ -187,27 +304,29 @@ export default class Selection extends Component {
             <View style={ styles.container }>
                 <ToolbarAndroid
                     style={{
-                        backgroundColor: this.state.isReorderActive ? '#30BCFF': '#151F2F',
+                        backgroundColor: this.state.isReorderActive || this.state.isSelectionActive ? '#30BCFF': '#151F2F',
                         height: 50 }}
-                    title={this.state.isReorderActive ? "Reorder" : "Selection"}
+                    title={this.state.isReorderActive ? "Reorder" :
+                            this.state.isSelectionActive ? this.state.selectedItems.length.toString() :
+                            "Selection"}
                     titleColor='white'
                     navIcon={require('./img/ic_back.png')}
                     actions={this.state.toolbarActions}
                     onActionSelected={this._onActionSelected}
-                    onIconClicked={ () => this.state.isReorderActive ?
-                        this.deactivateReorder()
+                    onIconClicked={ () => this.state.isReorderActive || this.state.isSelectionActive ?
+                        this.deactivate()
                         : this.props.navigator.pop() }>
                 </ToolbarAndroid>
                 <ScrollableTabView
                     style={ styles.subcontainer }
                     renderTabBar={() => <DefaultTabBar tabStyle={{ backgroundColor: '#4ac1fa',
-                        opacity: this.state.isReorderActive ? 0.4 : 1}} />}
+                        opacity: this.state.isReorderActive || this.state.isSelectionActive ? 0.4 : 1}} />}
                     tabBarActiveTextColor={'white'}
                     tabBarInactiveTextColor={'white'}
                     tabBarTextStyle={{ textAlign: 'center', textAlignVertical: 'center', marginTop: 7}}
                     tabBarBackgroundColor={'white'}
                     tabBarUnderlineStyle={{ backgroundColor: '#151F2F',
-                        opacity: this.state.isReorderActive ? 0.4 : 1}}
+                        opacity: this.state.isReorderActive || this.state.isSelectionActive ? 0.4 : 1}}
                 >
                     <View tabLabel='All' style={{ flex: 1 }}>
                         {this.state.isReorderActive ?
@@ -227,10 +346,20 @@ export default class Selection extends Component {
                                 horizontal={false}
                                 data={this.state.data}
                                 renderItem={({item, index}) =>
-                                    <ListItem item={item}
+                                    this.state.isSelectionActive ?
+                                        <SelectionListItem item={item}
+                                                           toggleFav={() => this.toggleFav(index)}
+                                                           deleteItem={() => this.deleteItem(index)}
+                                                           toggleSelection={() => this.toggleSelection(item, index)}
+                                                           isSelected={this.state.selectedItems.includes(item)}
+                                                           navigate={this._navigate}/>
+                                        :
+                                        <ListItem item={item}
                                               toggleFav={() => this.toggleFav(index)}
                                               deleteItem={() => this.deleteItem(index)}
-                                              navigate={this._navigate}/>}
+                                              activateSelection={ () => this.activateSelection(item) }
+                                              navigate={this._navigate}/>
+                                }
                             />
                         }
                     </View>
