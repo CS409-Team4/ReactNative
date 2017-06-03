@@ -23,6 +23,7 @@ import Selection from './Selection';
 import SelectionDetail from './SelectionDetail';
 import Naver from './Naver';
 import NaverWeb from './NaverWeb';
+import About from './About';
 
 export default class IUI extends Component {
   constructor(props) {
@@ -56,6 +57,9 @@ export default class IUI extends Component {
     }
     if (route.name == 'NaverWeb') {
       return <NaverWeb navigator={navigator} {...route.passProps} />
+    }
+    if (route.name == 'About') {
+        return <About navigator={navigator} {...route.passProps} />
     }
   }
 

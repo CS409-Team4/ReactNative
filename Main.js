@@ -7,6 +7,8 @@ import {
 	Dimensions,
 	ToolbarAndroid,
 	TouchableHighlight,
+    TouchableWithoutFeedback,
+    DrawerLayoutAndroid,
 } from 'react-native';
 import GridView from "react-native-easy-grid-view";
 
@@ -107,7 +109,7 @@ export default class Main extends Component {
 								width: this.state.cellWidth,
 								resizeMode: 'cover'
 							}}
-						></Image>
+						/>
 						<Text style={styles.text}>{cell.text}</Text>
 				</View>
 			</TouchableHighlight>
@@ -115,12 +117,36 @@ export default class Main extends Component {
 	}
 
 	render() {
+		var navigationView = (
+			<View style={{ flex: 1, backgroundColor: '#355AFA',
+                justifyContent: 'center',
+                alignItems: 'center'}}>
+				<TouchableWithoutFeedback
+                    onPress={() => this.refs['MAIN_DRAWER_REF'].closeDrawer()}
+                >
+					<Text style={ styles.drawerText }>Home</Text>
+				</TouchableWithoutFeedback>
+                <TouchableWithoutFeedback
+                    onPress={() => this._navigate('About')}
+                >
+                    <Text style={ styles.drawerText }>About</Text>
+                </TouchableWithoutFeedback>
+			</View>
+		);
 		return (
-			<View style={ styles.container }>
+			<DrawerLayoutAndroid
+				drawerWidth={250}
+				style={ styles.container }
+				drawerPosition={DrawerLayoutAndroid.positions.Left}
+				renderNavigationView={() => navigationView}
+				ref={'MAIN_DRAWER_REF'}
+			>
 				<ToolbarAndroid
 					style={{ backgroundColor: '#151F2F', height: 50 }}
 					title="React Native"
+                    titleColor="white"
 					navIcon={require('./img/ic_menu_main.png')}
+                    onIconClicked={ () => this.refs['MAIN_DRAWER_REF'].openDrawer() }
 				/>
 				<GridView
 					style={ styles.list }
@@ -128,7 +154,7 @@ export default class Main extends Component {
 					dataSource={this.state.dataSource}
 					renderCell={this._renderCell.bind(this)}
 				/>
-			</View>
+			</DrawerLayoutAndroid>
 		);
 	}
 }
@@ -142,6 +168,12 @@ const styles = StyleSheet.create({
 		marginTop: 8,
 		backgroundColor: '#455B66'
 	},
+    drawerText: {
+	    color: 'white',
+        fontSize: 14,
+        marginTop: 15,
+        marginBottom: 15,
+    },
 	text: {
 		backgroundColor:'white',
 		textAlign:'center',
