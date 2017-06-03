@@ -27,7 +27,11 @@ class GridIcon extends React.PureComponent {
                 borderColor: '#DFDFDF'
             }}>
                 <TouchableWithoutFeedback
-                    onPress={() => this.refs['DRAWER_REF'].closeDrawer()}
+                    onPress={ () => this.props.navigate('NaverWeb',
+                        {
+                            sourceUri: this.props.sourceUri,
+                            closeDrawer: this.props.closeDrawer,
+                        })}
                     style={{flex: 1, height: 80, backgroundColor: 'white'}}
                 >
                     <View style={{ flex:1, flexDirection: 'column',
@@ -53,6 +57,13 @@ export default class Naver extends Component {
         this.state = {
 
         }
+    }
+
+    _navigate = (scene, props) => {
+        this.props.navigator.push({
+            name: scene,
+            passProps: props,
+        })
     }
 
     render() {
@@ -90,10 +101,22 @@ export default class Naver extends Component {
                         paddingTop: 5
                     }}
                 >
-                    <GridIcon icon={ require('./img/ic_naver_mail.png')} name="메일" />
-                    <GridIcon icon={ require('./img/ic_naver_cafe.png')} name="카페" />
-                    <GridIcon icon={ require('./img/ic_naver_blog.png')} name="블로그" />
-                    <GridIcon icon={ require('./img/ic_naver_kin.png')} name="지식인" />
+                    <GridIcon icon={ require('./img/ic_naver_mail.png')} name="메일"
+                              sourceUri="http://mail.naver.com"
+                              closeDrawer={() => this.refs['DRAWER_REF'].closeDrawer()}
+                              navigate={this._navigate}/>
+                    <GridIcon icon={ require('./img/ic_naver_cafe.png')} name="카페"
+                              sourceUri="https://cafe.naver.com"
+                              closeDrawer={() => this.refs['DRAWER_REF'].closeDrawer()}
+                              navigate={this._navigate}/>
+                    <GridIcon icon={ require('./img/ic_naver_blog.png')} name="블로그"
+                              sourceUri="http://blog.naver.com"
+                              closeDrawer={() => this.refs['DRAWER_REF'].closeDrawer()}
+                              navigate={this._navigate}/>
+                    <GridIcon icon={ require('./img/ic_naver_kin.png')} name="지식인"
+                              sourceUri="http://kin.naver.com"
+                              closeDrawer={() => this.refs['DRAWER_REF'].closeDrawer()}
+                              navigate={this._navigate}/>
 
                 </View>
             </View>
