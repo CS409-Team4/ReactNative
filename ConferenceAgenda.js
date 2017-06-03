@@ -112,43 +112,43 @@ export default class ConferenceAgenda extends Component {
 					<View tabLabel='MAY 3' style={{ flex: 1 }}>
 						<SearchBar
 							onSearchChange={(searchText) => this._onSearchChange(searchText)}
-			        height={40}
-			        placeholder={'Search'}
-			        autoCorrect={false}
-			        padding={5}
-			        returnKeyType={'search'}
-			        inputStyle={{
-			        	backgroundColor: 'white',
-			        	margin: 16, 
-			        }}
-			        inputProps={{
-			        	defaultValue: this.state.search
-			        }} />
+						height={40}
+						placeholder={'Search'}
+						autoCorrect={false}
+						padding={5}
+						returnKeyType={'search'}
+						inputStyle={{
+							backgroundColor: 'white',
+							margin: 16,
+						}}
+						inputProps={{
+							defaultValue: this.state.search
+						}} />
 
-				    <ListView
-				    	dataSource={this.state.dataSource}
-				    	renderRow={(rowData) => this._renderRow(rowData)} />
+						<ListView
+							dataSource={this.state.dataSource}
+							renderRow={(rowData) => this._renderRow(rowData)} />
 					</View>
 					
 					<View tabLabel='MAY 4' style={{ flex: 1 }}>
 						<SearchBar
 							onSearchChange={(searchText) => this._onSearchChange(searchText)}
-			        height={40}
-			        placeholder={'Search'}
-			        autoCorrect={false}
-			        padding={5}
-			        returnKeyType={'search'}
-			        inputStyle={{
-			        	backgroundColor: 'white',
-			        	margin: 16, 
-			        }}
-			        inputProps={{
-			        	defaultValue: this.state.search
-			        }} />
+							height={40}
+							placeholder={'Search'}
+							autoCorrect={false}
+							padding={5}
+							returnKeyType={'search'}
+							inputStyle={{
+								backgroundColor: 'white',
+								margin: 16,
+							}}
+							inputProps={{
+								defaultValue: this.state.search
+							}} />
 
-				    <ListView
-				    	dataSource={this.state.dataSource}
-				    	renderRow={(rowData) => this._renderRow(rowData)} />
+						<ListView
+							dataSource={this.state.dataSource}
+							renderRow={(rowData) => this._renderRow(rowData)} />
 					</View>
 
 					<View tabLabel='MAY 5' style={{ flex: 1 }}>

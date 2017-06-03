@@ -21,6 +21,7 @@ import ConferenceAgenda from './ConferenceAgenda';
 import ItemLayouts from './ItemLayouts';
 import Selection from './Selection';
 import SelectionDetail from './SelectionDetail';
+import Naver from './Naver';
 
 export default class IUI extends Component {
   constructor(props) {
@@ -49,7 +50,9 @@ export default class IUI extends Component {
     if (route.name == 'SelectionDetail') {
       return <SelectionDetail navigator={navigator} {...route.passProps} />
     }
-
+    if (route.name == 'Naver') {
+      return <Naver navigator={navigator} {...route.passProps} />
+    }
   }
 
   render() {
