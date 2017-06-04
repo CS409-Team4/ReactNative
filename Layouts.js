@@ -32,7 +32,8 @@ export default class Layouts extends Component {
 			<View style={ styles.container }>
 				<ToolbarAndroid
 					style={{ backgroundColor: '#151F2F', height: 50 }}
-					title="React Native"
+					title="Layouts"
+					titleColor="white"
 					navIcon={require('./img/ic_back.png')}
 					onIconClicked={ () => this.props.navigator.pop() }>
 				</ToolbarAndroid>

@@ -9,6 +9,7 @@ import {
 	TextInput,
 	Switch,
 	Button,
+	ToastAndroid,
 } from 'react-native';
 import CheckBox from 'react-native-check-box';
 
@@ -42,7 +43,8 @@ export default class UserProfile extends Component {
 			<View style={ styles.container }>
 				<ToolbarAndroid
 					style={{ backgroundColor: '#151F2F', height: 50 }}
-					title="React Native"
+					title="User Profile"
+					titleColor="white"
 					navIcon={require('./img/ic_back.png')}
 					onIconClicked={ () => this.props.navigator.pop() }>
 				</ToolbarAndroid>
@@ -98,7 +100,7 @@ export default class UserProfile extends Component {
 							title="UPDATE"
 							color='#30BCFF'
 							style={ styles.update }
-							onPress={() => {}} />
+							onPress={() => {ToastAndroid.show('Updated', ToastAndroid.SHORT)}} />
 					</View>
 					<Image
 						source={require('./img/user.png')}
